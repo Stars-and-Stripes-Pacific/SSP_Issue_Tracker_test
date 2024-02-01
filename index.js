@@ -16,7 +16,8 @@ const config = require("./config");
 // Create adapter.
 // See https://aka.ms/about-bot-adapter to learn more about adapters.
 const credentialsFactory = new ConfigurationServiceClientCredentialFactory({
-  MicrosoftAppId: config.botId,
+  //MicrosoftAppId: config.botId,
+  MicrosoftAppId: "b39080ca-71d3-4637-b89b-302863dcd8bd",
   MicrosoftAppPassword: config.botPassword,
   MicrosoftAppType: "MultiTenant",
 });
