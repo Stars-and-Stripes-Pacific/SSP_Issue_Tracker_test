@@ -15,20 +15,20 @@ class TeamsBot extends TeamsActivityHandler {
 
       const options = {
         protocol: 'https:',
-        host: '40af-202-212-180-65.ngrok-free.app',
-        path: '/api/messages',
+        host: '0b16-202-212-180-65.ngrok-free.app',
+        path: '/api',
         method: 'GET',
       };
       
       const req = https.request(options, (res) => {
           res.on('data', (chunk) => {
               console.log(`BODY: ${chunk}`);
-              context.sendActivity(`Echo: ${chunk}`);
+              context.sendActivity('Echo: start');
           });
           res.on('end', () => {
               console.log('No more data in response.');
               //await context.sendActivity(`Echo: ${txt}`);
-              //context.sendActivity(`Echo: ${chunk}`);
+              context.sendActivity(`Echo: ${chunk}`);
               // By calling next() you ensure that the next BotHandler is run.
               next();
 
