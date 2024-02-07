@@ -26,6 +26,8 @@ class TeamsBot extends TeamsActivityHandler {
               console.log(`BODY: ${chunk}`);
               //context.sendActivity('Echo: start');
               categories = chunk;
+              //await context.sendActivity(`Echo: ${txt}`);
+              context.sendActivity(`Echo: ${categories}`);
           });
           res.on('end', () => {
               console.log('No more data in response.');
