@@ -1,5 +1,5 @@
 const { TeamsActivityHandler, CardFactory, TurnContext } = require("botbuilder");
-var spauth = require('node-sp-auth');
+//var spauth = require('node-sp-auth');
 var request = require('request-promise');
 var $REST = require("gd-sprest");
 
