@@ -1,7 +1,8 @@
 const { TeamsActivityHandler, CardFactory, TurnContext } = require("botbuilder");
 //var spauth = require('node-sp-auth');
-var request = require('request-promise');
-var $REST = require("gd-sprest");
+//var request = require('request-promise');
+//var $REST = require("gd-sprest");
+const https = require('https');
 
 class TeamsBot extends TeamsActivityHandler {
   constructor() {
