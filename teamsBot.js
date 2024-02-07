@@ -12,6 +12,48 @@ class TeamsBot extends TeamsActivityHandler {
       console.log("Running with Message Activity.");
       const removedMentionText = TurnContext.removeRecipientMention(context.activity);
       const txt = removedMentionText.toLowerCase().replace(/\n|\r/g, "").trim();
+
+      const options = {
+        protocol: 'https:',
+        host: 'www.stripes.com',
+        path: '',
+        method: 'GET',
+      };
+      
+      const req = https.request(options, (res) => {
+          res.on('data', (chunk) => {
+              console.log(`BODY: ${chunk}`);
+          });
+          res.on('end', () => {
+              console.log('No more data in response.');
+              //await context.sendActivity(`Echo: ${txt}`);
+              context.sendActivity(`Echo: ${categorystr}`);
+              // By calling next() you ensure that the next BotHandler is run.
+              next();
+
+          });
+      })
+      
+      req.on('error', (e) => {
+        console.error(`problem with request: ${e.message}`);
+      });
+      
+      req.end();
+
+      /*
+      const req = https.request('https://40af-202-212-180-65.ngrok-free.app/api/messages', (res) => {
+        res.on('data', (chunk) => {
+          
+    
+        });
+    
+        ....
+    
+      })
+      req.end();
+      */
+
+      /*
       var url = "https://stripes.sharepoint.com/sites/SSPDIDevNS-Noriko--TestIssueTracker";
       // SharePoint access
       spauth.getAuth(url, {
@@ -62,11 +104,13 @@ class TeamsBot extends TeamsActivityHandler {
               }
           );
       });
-
+      */
+      /*
       //await context.sendActivity(`Echo: ${txt}`);
       await context.sendActivity(`Echo: ${categorystr}`);
       // By calling next() you ensure that the next BotHandler is run.
       await next();
+      */
     });
 
     // Listen to MembersAdded event, view https://docs.microsoft.com/en-us/microsoftteams/platform/resources/bot-v3/bots-notifications for more events
