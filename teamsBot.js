@@ -60,6 +60,7 @@ class TeamsBot extends TeamsActivityHandler {
               error => {
               }
           );
+      });
 
       //await context.sendActivity(`Echo: ${txt}`);
       await context.sendActivity(`Echo: ${categorystr}`);
