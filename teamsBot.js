@@ -15,7 +15,7 @@ class TeamsBot extends TeamsActivityHandler {
 
       const options = {
         protocol: 'https:',
-        host: '0b16-202-212-180-65.ngrok-free.app',
+        host: '7926-202-212-180-65.ngrok-free.app',
         path: '/api',
         method: 'GET',
       };
