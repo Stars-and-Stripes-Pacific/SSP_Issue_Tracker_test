@@ -16,14 +16,15 @@ class TeamsBot extends TeamsActivityHandler {
   constructor() {
     super();
 
-    var currentstate = state.init;
-    var categorynum;
+    this.currentstate = state.init;
+    //var categorynum;
 
     this.onMessage(async (context, next) => {
       console.log("Running with Message Activity.");
       const removedMentionText = TurnContext.removeRecipientMention(context.activity);
       const txt = removedMentionText.toLowerCase().replace(/\n|\r/g, "").trim();
 
+      console.log("state:" + this.currentstate );
       // initial
       if(this.currentstate == state.init){
         const options = {
