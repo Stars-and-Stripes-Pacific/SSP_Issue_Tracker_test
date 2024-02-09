@@ -49,7 +49,7 @@ class TeamsBot extends TeamsActivityHandler {
                 //context.sendActivity(`Echo: ${chunk}`);
                 // By calling next() you ensure that the next BotHandler is run.
                 //next();
-
+                this.currentstate = state.category;  
             });
         })
         
@@ -58,7 +58,7 @@ class TeamsBot extends TeamsActivityHandler {
         });
         
         req.end();
-        this.currentstate = state.category;  
+
       // category
       }else if(this.currentstate == state.category){
         // set user input to variable
@@ -87,7 +87,7 @@ class TeamsBot extends TeamsActivityHandler {
                 //context.sendActivity(`Echo: ${chunk}`);
                 // By calling next() you ensure that the next BotHandler is run.
                 //next();
-
+                this.currentstate = state.init;  
             });
         })
         
@@ -96,7 +96,7 @@ class TeamsBot extends TeamsActivityHandler {
         });
         
         req.end();
-        this.currentstate = state.init;  
+        //this.currentstate = state.init;  
       }else{
         console.log("error state mismatch");
       }
