@@ -1,52 +1,107 @@
 const { TeamsActivityHandler, CardFactory, TurnContext } = require("botbuilder");
-//var spauth = require('node-sp-auth');
-//var request = require('request-promise');
-//var $REST = require("gd-sprest");
 const https = require('https');
+
+const state = {
+  init:     0,
+  category: 1,
+  issue:    2,
+}
+
+// URL path definition
+const urladdr      = '1835-202-212-180-65.ngrok-free.app'
+const categorypath = '/api/category';
+const issuepath    = '/api/issue';
 
 class TeamsBot extends TeamsActivityHandler {
   constructor() {
     super();
+
+    var currentstate = state.init;
+    var categorynum;
 
     this.onMessage(async (context, next) => {
       console.log("Running with Message Activity.");
       const removedMentionText = TurnContext.removeRecipientMention(context.activity);
       const txt = removedMentionText.toLowerCase().replace(/\n|\r/g, "").trim();
 
-      const options = {
-        protocol: 'https:',
-        host: '7926-202-212-180-65.ngrok-free.app',
-        path: '/api',
-        method: 'GET',
-      };
-      
-      var categories = '';
-      const req = https.request(options, (res) => {
-          res.on('data', (chunk) => {
-              console.log(`BODY: ${chunk}`);
-              //context.sendActivity('Echo: start');
-              categories = chunk;
-              //await context.sendActivity(`Echo: ${txt}`);
-              context.sendActivity(`Echo: ${categories}`);
-          });
-          res.on('end', () => {
-              console.log('No more data in response.');
-              //await context.sendActivity(`Echo: ${txt}`);
-              //context.sendActivity(`Echo: ${chunk}`);
-              // By calling next() you ensure that the next BotHandler is run.
-              //next();
+      // initial
+      if(this.currentstate == state.init){
+        const options = {
+          protocol: 'https:',
+          host: urladdr,
+          path: categorypath,
+          method: 'GET',
+        };
+        
+        var categories = '';
+        const req = https.request(options, (res) => {
+            res.on('data', (chunk) => {
+                console.log(`BODY: ${chunk}`);
+                //context.sendActivity('Echo: start');
+                categories = chunk;
+                //await context.sendActivity(`Echo: ${txt}`);
+                context.sendActivity(`Echo: ${categories}`);
+            });
+            res.on('end', () => {
+                console.log('No more data in response.');
+                //await context.sendActivity(`Echo: ${txt}`);
+                //context.sendActivity(`Echo: ${chunk}`);
+                // By calling next() you ensure that the next BotHandler is run.
+                //next();
 
-          });
-      })
-      
-      req.on('error', (e) => {
-        console.error(`problem with request: ${e.message}`);
-      });
-      
-      req.end();
+            });
+        })
+        
+        req.on('error', (e) => {
+          console.error(`problem with request: ${e.message}`);
+        });
+        
+        req.end();
+        this.currentstate = state.category;  
+      // category
+      }else if(this.currentstate == state.category){
+        // set user input to variable
+        this.categorynum = txt;
+        this.currentstate = state.issue;
+      }else if(this.currentstate == state.issue){
+        const options = {
+          protocol: 'https:',
+          host: urladdr,
+          path: issuepath,
+          method: 'GET',
+        };
+        
+        var categories = '';
+        const req = https.request(options, (res) => {
+            res.on('data', (chunk) => {
+                console.log(`BODY: ${chunk}`);
+                //context.sendActivity('Echo: start');
+                categories = chunk;
+                //await context.sendActivity(`Echo: ${txt}`);
+                context.sendActivity(`Echo: ${categories}`);
+            });
+            res.on('end', () => {
+                console.log('No more data in response.');
+                //await context.sendActivity(`Echo: ${txt}`);
+                //context.sendActivity(`Echo: ${chunk}`);
+                // By calling next() you ensure that the next BotHandler is run.
+                //next();
 
-      //await context.sendActivity(`Echo: ${txt}`);
-      await context.sendActivity(`Echo: ${categories}`);
+            });
+        })
+        
+        req.on('error', (e) => {
+          console.error(`problem with request: ${e.message}`);
+        });
+        
+        req.end();
+        this.currentstate = state.init;  
+      }else{
+        console.log("error state mismatch");
+      }
+
+      await context.sendActivity(`Echo: ${txt}`);
+      //await context.sendActivity(`Echo: ${categories}`);
       // By calling next() you ensure that the next BotHandler is run.
       await next();
     });
