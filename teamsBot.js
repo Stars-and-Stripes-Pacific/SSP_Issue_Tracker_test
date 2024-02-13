@@ -8,9 +8,9 @@ const state = {
 }
 
 // URL path definition
-const urladdr      = '1835-202-212-180-65.ngrok-free.app'
+const urladdr      = '8939-202-212-180-65.ngrok-free.app'
 const categorypath = '/api/category';
-const issuepath    = '/api/issue';
+const issuepath    = '/api/issue?key=';
 
 class TeamsBot extends TeamsActivityHandler {
   constructor() {
@@ -18,6 +18,7 @@ class TeamsBot extends TeamsActivityHandler {
 
     this.currentstate = state.init;
     //var categorynum;
+    this.categorytext = '';
 
     this.onMessage(async (context, next) => {
       console.log("Running with Message Activity.");
@@ -62,13 +63,13 @@ class TeamsBot extends TeamsActivityHandler {
       // category
       }else if(this.currentstate == state.category){
         // set user input to variable
-        this.categorynum = txt;
+        this.categorytext = txt;
         this.currentstate = state.issue;
       }else if(this.currentstate == state.issue){
         const options = {
           protocol: 'https:',
           host: urladdr,
-          path: issuepath,
+          path: issuepath + this.currentstate,
           method: 'GET',
         };
         
