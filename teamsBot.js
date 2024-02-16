@@ -69,7 +69,7 @@ class TeamsBot extends TeamsActivityHandler {
         const options = {
           protocol: 'https:',
           host: urladdr,
-          path: issuepath + this.currentstate,
+          path: issuepath + this.categorytext,
           method: 'GET',
         };
         
