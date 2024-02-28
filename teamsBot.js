@@ -8,7 +8,7 @@ const state = {
 }
 
 // URL path definition
-const urladdr      = 'cee3-202-212-180-65.ngrok-free.app'
+const urladdr      = '28ef-202-212-180-65.ngrok-free.app'
 const categorypath = '/api/category';
 const issuepath    = '/api/issue?key=';
 
